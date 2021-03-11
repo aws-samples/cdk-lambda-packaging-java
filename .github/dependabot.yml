@@ -1,0 +1,23 @@
+version: 2
+updates:
+  - package-ecosystem: "maven"
+    directory: "/infrastructure"
+    schedule:
+      interval: "daily"
+    labels:
+      - "maven"
+      - "dependencies"
+  - package-ecosystem: "maven"
+    directory: "/software/FunctionOne"
+    schedule:
+      interval: "daily"
+    labels:
+      - "maven"
+      - "dependencies"
+  - package-ecosystem: "maven"
+    directory: "/software/FunctionTwo"
+    schedule:
+      interval: "daily"
+    labels:
+      - "maven"
+      - "dependencies"
