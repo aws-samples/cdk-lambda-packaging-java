@@ -21,7 +21,7 @@ public class InfrastructureStackTest {
         JsonNode actual = JSON.valueToTree(app.synth().getStackArtifact(stack.getArtifactId()).getTemplate());
 
         assertThat(actual.toString())
-            .contains("AWS::SQS::Queue")
-            .contains("AWS::SNS::Topic");
+                .contains("AWS::ApiGatewayV2::Api")
+                .contains("AWS::Lambda::Function");
     }
 }
