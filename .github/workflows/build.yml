@@ -36,6 +36,9 @@ jobs:
     if: github.base_ref == 'main' && github.actor == 'dependabot[bot]'
     steps:
       - uses: actions/github-script@0.2.0
+      - name: "Auto merge if PR from dependabot"
+        env:
+          AUTOMERGE: ${{ secrets.AUTOMERGE }}
         with:
           script: |
             github.pullRequests.createReview({
@@ -50,4 +53,4 @@ jobs:
               pull_number: context.payload.pull_request.number,
               merge_method: 'squash'
             })
-          github-token: ${{ secrets.AUTOMERGE }}
+          github-token: $AUTOMERGE
