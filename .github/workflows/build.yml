@@ -33,8 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Save PR number if running on PR
     steps:
-      - uses: actions/checkout@v2
-        name: Create Directory and save issue
+      - name: Create Directory and save issue
         run: |
           mkdir -p ./pr
           echo ${{ github.event.number }}
