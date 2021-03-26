@@ -33,19 +33,19 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip
       - name: Merge me!
-        uses: actions/github-script@0.2.0
+        uses: actions/github-script@v3
         with:
           script: |
             var fs = require('fs');
             var issue_number = Number(fs.readFileSync('./NR'));
 
-            github.pullRequests.createReview({
+            github.pulls.createReview({
               owner: context.payload.repository.owner.login,
               repo: context.payload.repository.name,
               pull_number: issue_numberr,
               event: 'APPROVE'
             })
-            github.pullRequests.merge({
+            github.pulls.merge({
               owner: context.payload.repository.owner.login,
               repo: context.payload.repository.name,
               pull_number: issue_number,
