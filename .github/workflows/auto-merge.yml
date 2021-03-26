@@ -9,7 +9,7 @@ jobs:
   merge-me:
     name: Merge me!
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' && github.base_ref == 'main' && github.actor == 'dependabot[bot]'
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' && github.base_ref == 'main'
     steps:
       - name: 'Download artifact'
         uses: actions/github-script@v3.1.0
