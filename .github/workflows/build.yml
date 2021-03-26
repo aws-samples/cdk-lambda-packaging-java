@@ -29,3 +29,11 @@ jobs:
         run: |
           cd ./infrastructure
           mvn -B package --file pom.xml
+      - name: Save PR number if running on PR
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NR
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pr
+          path: pr/

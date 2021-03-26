@@ -8,27 +8,26 @@ on:
 jobs:
   merge-me:
     name: Merge me!
-    if: >
-      ${{ github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.conclusion == 'success' &&
-      github.base_ref == 'main' &&
-      github.actor == 'dependabot[bot]' }}
     runs-on: ubuntu-latest
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' && github.base_ref == 'main' && github.actor == 'dependabot[bot]'
     steps:
       - name: Merge me!
         uses: actions/github-script@0.2.0
         with:
           script: |
+            var fs = require('fs');
+            var issue_number = Number(fs.readFileSync('./NR'));
+
             github.pullRequests.createReview({
               owner: context.payload.repository.owner.login,
               repo: context.payload.repository.name,
-              pull_number: context.payload.pull_request.number,
+              pull_number: issue_numberr,
               event: 'APPROVE'
             })
             github.pullRequests.merge({
               owner: context.payload.repository.owner.login,
               repo: context.payload.repository.name,
-              pull_number: context.payload.pull_request.number,
+              pull_number: issue_number,
               merge_method: 'squash'
             })
           github-token: ${{ secrets.MERGE }}
