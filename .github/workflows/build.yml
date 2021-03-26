@@ -29,11 +29,18 @@ jobs:
         run: |
           cd ./infrastructure
           mvn -B package --file pom.xml
-      - name: Save PR number if running on PR
+  savepr:
+    runs-on: ubuntu-latest
+    name: Save PR number if running on PR
+    steps:
+      - uses: actions/checkout@v2
+        name: Create Directory and save issue
         run: |
           mkdir -p ./pr
+          echo ${{ github.event.number }}
           echo ${{ github.event.number }} > ./pr/NR
       - uses: actions/upload-artifact@v2
+        name: Updload artifact
         with:
           name: pr
           path: pr/
