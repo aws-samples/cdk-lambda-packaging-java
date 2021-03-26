@@ -32,6 +32,7 @@ jobs:
   savepr:
     runs-on: ubuntu-latest
     name: Save PR number if running on PR
+    if: github.actor == 'dependabot[bot]'
     steps:
       - name: Create Directory and save issue
         run: |
