@@ -62,15 +62,14 @@ public class InfrastructureStack extends Stack {
                                 .containerPath("/root/.m2/")
                                 .build()
                 ))
-                .user("root");
+                .user("root")
+                .outputType(ARCHIVED);
 
         Function functionOne = new Function(this, "FunctionOne", FunctionProps.builder()
                 .runtime(Runtime.JAVA_8_CORRETTO)
                 .code(Code.fromAsset("../software/", AssetOptions.builder()
                         .bundling(builderOptions
                                 .command(functionOnePackagingInstructions)
-                                // this will ensure that we dont further zip the content of asset-output directory
-                                .outputType(ARCHIVED)
                                 .build())
                         .build()))
                 .handler("helloworld.App")
@@ -84,7 +83,6 @@ public class InfrastructureStack extends Stack {
                 .code(Code.fromAsset("../software/", AssetOptions.builder()
                         .bundling(builderOptions
                                 .command(functionTwoPackagingInstructions)
-                                .outputType(ARCHIVED)
                                 .build())
                         .build()))
                 .handler("helloworld.App")
