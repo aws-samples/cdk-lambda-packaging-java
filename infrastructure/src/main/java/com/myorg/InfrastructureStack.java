@@ -54,7 +54,7 @@ public class InfrastructureStack extends Stack {
 
         BundlingOptions.Builder builderOptions = BundlingOptions.builder()
                 .command(functionOnePackagingInstructions)
-                .image(Runtime.JAVA_8_CORRETTO.getBundlingDockerImage())
+                .image(Runtime.JAVA_8_CORRETTO.getBundlingImage())
                 .volumes(singletonList(
                         // Mount local .m2 repo to avoid download all the dependencies again inside the container
                         DockerVolume.builder()
