@@ -54,7 +54,7 @@ public class InfrastructureStack extends Stack {
 
         BundlingOptions.Builder builderOptions = BundlingOptions.builder()
                 .command(functionOnePackagingInstructions)
-                .image(Runtime.JAVA_8_CORRETTO.getBundlingImage())
+                .image(Runtime.JAVA_11.getBundlingImage())
                 .volumes(singletonList(
                         // Mount local .m2 repo to avoid download all the dependencies again inside the container
                         DockerVolume.builder()
@@ -66,7 +66,7 @@ public class InfrastructureStack extends Stack {
                 .outputType(ARCHIVED);
 
         Function functionOne = new Function(this, "FunctionOne", FunctionProps.builder()
-                .runtime(Runtime.JAVA_8_CORRETTO)
+                .runtime(Runtime.JAVA_11)
                 .code(Code.fromAsset("../software/", AssetOptions.builder()
                         .bundling(builderOptions
                                 .command(functionOnePackagingInstructions)
@@ -79,7 +79,7 @@ public class InfrastructureStack extends Stack {
                 .build());
 
         Function functionTwo = new Function(this, "FunctionTwo", FunctionProps.builder()
-                .runtime(Runtime.JAVA_8_CORRETTO)
+                .runtime(Runtime.JAVA_11)
                 .code(Code.fromAsset("../software/", AssetOptions.builder()
                         .bundling(builderOptions
                                 .command(functionTwoPackagingInstructions)

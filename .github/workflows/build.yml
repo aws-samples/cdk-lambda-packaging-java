@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        java: [8, 11.0.x]
+        java: [11.0.x]
     name: Java ${{ matrix.java }}
     env:
       OS: ${{ matrix.os }}
