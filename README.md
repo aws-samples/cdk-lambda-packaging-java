@@ -1,5 +1,7 @@
 # cdk-lambda-packaging-java
 
+![Build status](https://github.com/aws-samples/cdk-lambda-packaging-java/actions/workflows/build.yml/badge.svg)
+
 This sample application show how you can use [AWS Cloud Development Kit(AWS CDK)](https://aws.amazon.com/cdk/) to deploy a AWS lambda functions with 
 external dependencies. [AWS Serverless Application Model (AWS SAM)](https://aws.amazon.com/serverless/sam/) takes care of building and packaging
 lambda function with external dependencies out of the box. It was not possible this with AWS CDK until [s3-assets](https://mvnrepository.com/artifact/software.amazon.awscdk/s3-assets)
