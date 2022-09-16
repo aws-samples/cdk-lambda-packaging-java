@@ -3,21 +3,22 @@ package com.myorg;
 import java.util.Arrays;
 import java.util.List;
 
-import software.amazon.awscdk.core.BundlingOptions;
-import software.amazon.awscdk.core.CfnOutput;
-import software.amazon.awscdk.core.CfnOutputProps;
-import software.amazon.awscdk.core.Construct;
-import software.amazon.awscdk.core.DockerVolume;
-import software.amazon.awscdk.core.Duration;
-import software.amazon.awscdk.core.Stack;
-import software.amazon.awscdk.core.StackProps;
-import software.amazon.awscdk.services.apigatewayv2.AddRoutesOptions;
-import software.amazon.awscdk.services.apigatewayv2.HttpApi;
-import software.amazon.awscdk.services.apigatewayv2.HttpApiProps;
-import software.amazon.awscdk.services.apigatewayv2.HttpMethod;
-import software.amazon.awscdk.services.apigatewayv2.PayloadFormatVersion;
-import software.amazon.awscdk.services.apigatewayv2.integrations.LambdaProxyIntegration;
-import software.amazon.awscdk.services.apigatewayv2.integrations.LambdaProxyIntegrationProps;
+import software.amazon.awscdk.App;
+import software.amazon.awscdk.BundlingOptions;
+import software.amazon.awscdk.CfnOutput;
+import software.amazon.awscdk.CfnOutputProps;
+import software.constructs.Construct;
+import software.amazon.awscdk.DockerVolume;
+import software.amazon.awscdk.Duration;
+import software.amazon.awscdk.Stack;
+import software.amazon.awscdk.StackProps;
+import software.amazon.awscdk.services.apigatewayv2.alpha.AddRoutesOptions;
+import software.amazon.awscdk.services.apigatewayv2.alpha.HttpApi;
+import software.amazon.awscdk.services.apigatewayv2.alpha.HttpApiProps;
+import software.amazon.awscdk.services.apigatewayv2.alpha.HttpMethod;
+import software.amazon.awscdk.services.apigatewayv2.alpha.PayloadFormatVersion;
+import software.amazon.awscdk.services.apigatewayv2.integrations.alpha.HttpLambdaIntegration;
+import software.amazon.awscdk.services.apigatewayv2.integrations.alpha.HttpLambdaIntegrationProps;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.FunctionProps;
@@ -26,10 +27,10 @@ import software.amazon.awscdk.services.logs.RetentionDays;
 import software.amazon.awscdk.services.s3.assets.AssetOptions;
 
 import static java.util.Collections.singletonList;
-import static software.amazon.awscdk.core.BundlingOutput.ARCHIVED;
+import static software.amazon.awscdk.BundlingOutput.ARCHIVED;
 
 public class InfrastructureStack extends Stack {
-    public InfrastructureStack(final Construct parent, final String id) {
+    public InfrastructureStack(final App parent, final String id) {
         this(parent, id, null);
     }
 
@@ -98,8 +99,7 @@ public class InfrastructureStack extends Stack {
         httpApi.addRoutes(AddRoutesOptions.builder()
                 .path("/one")
                 .methods(singletonList(HttpMethod.GET))
-                .integration(new LambdaProxyIntegration(LambdaProxyIntegrationProps.builder()
-                        .handler(functionOne)
+                .integration(new HttpLambdaIntegration("functionOne", functionOne, HttpLambdaIntegrationProps.builder()
                         .payloadFormatVersion(PayloadFormatVersion.VERSION_2_0)
                         .build()))
                 .build());
@@ -107,8 +107,7 @@ public class InfrastructureStack extends Stack {
         httpApi.addRoutes(AddRoutesOptions.builder()
                 .path("/two")
                 .methods(singletonList(HttpMethod.GET))
-                .integration(new LambdaProxyIntegration(LambdaProxyIntegrationProps.builder()
-                        .handler(functionTwo)
+                .integration(new HttpLambdaIntegration("functionTwo", functionTwo, HttpLambdaIntegrationProps.builder()
                         .payloadFormatVersion(PayloadFormatVersion.VERSION_2_0)
                         .build()))
                 .build());
