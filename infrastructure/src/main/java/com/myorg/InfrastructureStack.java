@@ -98,7 +98,7 @@ public class InfrastructureStack extends Stack {
 
         httpApi.addRoutes(AddRoutesOptions.builder()
                 .path("/one")
-                .methods(singletonList(HttpMethod.GET))
+                .methods(singletonList(HttpMethod.POST))
                 .integration(new HttpLambdaIntegration("functionOne", functionOne, HttpLambdaIntegrationProps.builder()
                         .payloadFormatVersion(PayloadFormatVersion.VERSION_2_0)
                         .build()))
@@ -106,7 +106,7 @@ public class InfrastructureStack extends Stack {
 
         httpApi.addRoutes(AddRoutesOptions.builder()
                 .path("/two")
-                .methods(singletonList(HttpMethod.GET))
+                .methods(singletonList(HttpMethod.POST))
                 .integration(new HttpLambdaIntegration("functionTwo", functionTwo, HttpLambdaIntegrationProps.builder()
                         .payloadFormatVersion(PayloadFormatVersion.VERSION_2_0)
                         .build()))
