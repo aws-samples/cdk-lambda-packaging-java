@@ -24,27 +24,37 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
     @Tracing(captureMode = DISABLED)
     @Metrics(captureColdStart = true)
-    public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
+    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
+
+        LambdaLogger logger = context.getLogger();
         Map<String, String> headers = new HashMap<>();
+
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
 
+        String body = input.getBody();
+        logger.log("REQUEST: " + body);
+
+        QuoteRequest quoteRequest;
+        try {
+            quoteRequest = mapper.readValue(body, QuoteRequest.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
-        try {
-            final String pageContents = this.getPageContents("https://checkip.amazonaws.com");
-            String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);
 
-            return response
-                    .withStatusCode(200)
-                    .withBody(output);
-        } catch (IOException e) {
-            return response
-                    .withBody("{}")
-                    .withStatusCode(500);
-        }
+
+
+        String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }");
+/*
+                    mapper.writeValueAsString(quoteRequest));
+*/
+
+        return response
+                .withStatusCode(200)
+                .withBody(output);
     }
-
     @Tracing(namespace = "getPageContents")
     private String getPageContents(String address) throws IOException {
         URL url = new URL(address);

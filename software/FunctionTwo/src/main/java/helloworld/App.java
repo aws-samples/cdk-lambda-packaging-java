@@ -20,7 +20,7 @@ import static software.amazon.lambda.powertools.tracing.CaptureMode.DISABLED;
 /**
  * Handler for requests to Lambda function.
  */
-public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+public class App implements RequestHandler<final APIGatewayProxyRequestEvent, final APIGatewayProxyResponseEvent> {
     ObjectMapper mapper = new ObjectMapper();
 
     @Tracing(captureMode = DISABLED)
